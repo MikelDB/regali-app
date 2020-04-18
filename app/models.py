@@ -1,75 +1,34 @@
 from . import db
 
 
-class Cart(db.Model):
+class Person(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    code = db.Column(db.String(36), index=False, unique=True)
-    checked_out = db.Column(db.Boolean, index=False, unique=True)
+    google_id = db.Column(db.String(36), index=False, unique=True)
+    email = db.Column(db.String(36), index=False, unique=True)
+    name = db.Column(db.String(16), index=False, unique=False)
+    is_active = db.Column(db.Boolean, index=False, unique=False)
+    is_authenticated = db.Column(db.Boolean, index=False, unique=False, default=True)
+    profile_pic = db.Column(db.Text, index=False, unique=False)
 
-    elements = db.relationship('Element', backref='cart', lazy='dynamic', cascade="all, delete-orphan")
-    discounts = db.relationship('Discount', backref='cart', lazy='dynamic')
+    events = db.relationship('Event', backref='person', lazy='dynamic', cascade="all, delete-orphan")
 
     def __repr__(self):
-        return '<Cart {}>'.format(self.id)
+        return '<Person {}>'.format(self.id)
+
+    def get_id(self):
+        return self.id
+
+    def is_anonymous(self):
+        """False, as anonymous users aren't supported."""
+        return False
 
 
-class Element(db.Model):
+class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    code = db.Column(db.String(36), index=False, unique=True)
-    cart_id = db.Column(db.Integer, db.ForeignKey('cart.id'))
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
-
-    product = db.relationship("Product")
+    name = db.Column(db.String(16), index=False, unique=False)
+    reference = db.Column(db.String(36), index=False, unique=True)
+    created_at = db.Column(db.Date, index=False, unique=False)
+    person_id = db.Column(db.Integer, db.ForeignKey('person.id'))
 
     def __repr__(self):
-        return '<Element {}>'.format(self.id)
-
-
-class OrderElement(db.Model):
-    __tablename__ = 'order_element'
-
-    id = db.Column(db.Integer, primary_key=True)
-    code = db.Column(db.String(36), index=False, unique=True)
-    order_id = db.Column(db.Integer, db.ForeignKey('order.id'))
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
-
-    product = db.relationship("Product")
-
-    def __repr__(self):
-        return '<Element {}>'.format(self.id)
-
-
-class Discount(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    code = db.Column(db.String(20), index=False, unique=True)
-    cart_id = db.Column(db.Integer, db.ForeignKey('cart.id'))
-    order_id = db.Column(db.Integer, db.ForeignKey('order.id'))
-    percentage = db.Column(db.Integer, index=False, unique=False)
-    decimals = db.Column(db.Integer, index=False, unique=False)
-
-    def __repr__(self):
-        return '<Discount {}>'.format(self.id)
-
-
-class Product(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    reference = db.Column(db.String(20), index=False, unique=True)
-    name = db.Column(db.String(20), db.ForeignKey('cart.id'))
-    price = db.Column(db.Integer, index=False, unique=False)
-    decimals = db.Column(db.Integer, index=False, unique=False)
-
-    def __repr__(self):
-        return '<Product {}>'.format(self.id)
-
-
-class Order(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    code = db.Column(db.String(36), index=False, unique=True)
-    final_price = db.Column(db.Integer, index=False, unique=False)
-    final_price_decimals = db.Column(db.Integer, index=False, unique=False)
-
-    elements = db.relationship('OrderElement', backref='order', lazy='dynamic', cascade="all, delete-orphan")
-    discounts = db.relationship('Discount', backref='order', lazy='dynamic')
-
-    def __repr__(self):
-        return '<Cart {}>'.format(self.id)
+        return '<Event {}>'.format(self.id)

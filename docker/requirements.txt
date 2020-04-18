@@ -4,3 +4,7 @@ mysqlclient
 pymysql
 cryptography
 flask-sqlalchemy
+requests
+oauthlib
+pyOpenSSL
+Flask-Login
