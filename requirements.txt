@@ -9,3 +9,4 @@ oauthlib
 pyOpenSSL
 Flask-Login
 gunicorn
+psycopg2
