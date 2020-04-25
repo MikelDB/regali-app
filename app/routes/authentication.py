@@ -11,7 +11,6 @@ from flask_login import (
 )
 from oauthlib.oauth2 import WebApplicationClient
 import requests
-import sys
 
 # Configuration
 GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID", None)
@@ -31,7 +30,6 @@ client = WebApplicationClient(GOOGLE_CLIENT_ID)
 
 @login_manager.user_loader
 def load_user(user_id):
-    print(user_id, file=sys.stdout)
     return models.Person.query.get(user_id)
 
 @app.route('/login', methods=['GET'])
