@@ -1,29 +1,44 @@
 <template>
-  <div class="header">
-    <Profile/>
-    <Timer/>
-  </div>
+  <v-app-bar
+    app
+    clipped-left
+    dense
+  >
+    <v-app-bar-nav-icon @click.stop="updateDrawer()" />
+    <v-toolbar-title>Application</v-toolbar-title>
+    <v-spacer></v-spacer>
+    <Profile :name=profile.name :image=profile.image></Profile>
+  </v-app-bar>
 </template>
 
 <script>
+import axios from 'axios';
+import EventBus from '@/helpers/event-bus';
 import Profile from '@/components/dashboard/Profile.vue';
-import Timer from '@/components/dashboard/Timer.vue';
-
 
 export default {
   name: 'Header',
   components: {
     Profile,
-    Timer,
+  },
+  data: () => ({
+    drawer: true,
+    profile: {
+      image: null,
+      name: null,
+    },
+  }),
+  methods: {
+    updateDrawer() {
+      this.drawer = !this.drawer;
+      EventBus.$emit('DRAWER_UPDATE', this.drawer);
+    },
+  },
+  beforeMount() {
+    axios.get('/profile').then(({ data }) => {
+      this.profile.image = data.image;
+      this.profile.name = data.name;
+    });
   },
 };
 </script>
-<style>
-.header {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  height: 64px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-</style>

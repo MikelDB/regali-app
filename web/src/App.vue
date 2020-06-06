@@ -1,33 +1,31 @@
 <template>
-  <div id="app">
-    <router-view/>
-  </div>
+  <v-app id="inspire">
+    <Navigation></Navigation>
+    <Header></Header>
+    <Content></Content>
+    <Footer></Footer>
+  </v-app>
 </template>
 
-<style>
-* {
-  padding: 0;
-  margin: 0;
-}
+<script>
 
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+import Header from '@/components/dashboard/Header.vue';
+import Navigation from '@/components/dashboard/Navigation.vue';
+import Content from '@/components/dashboard/Content.vue';
+import Footer from '@/components/dashboard/Footer.vue';
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+export default {
+  props: {
+    source: String,
+  },
+  components: {
+    Header,
+    Navigation,
+    Footer,
+    Content,
+  },
+  created() {
+    this.$vuetify.theme.dark = true;
+  },
+};
+</script>
