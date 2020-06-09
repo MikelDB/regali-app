@@ -10,3 +10,4 @@ pyOpenSSL
 Flask-Login
 gunicorn
 psycopg2
+flask-injector

@@ -8,3 +8,4 @@ requests
 oauthlib
 pyOpenSSL
 Flask-Login
+flask-injector

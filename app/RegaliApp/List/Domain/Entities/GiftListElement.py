@@ -1,16 +1,15 @@
-class GiftList:
-    def __init__(self, id, reference, user_id, name, active, public, updated_at, created_at):
+class GiftListElement:
+    def __init__(self, id, reference, list_id, name, url, updated_at, created_at):
         self.id = id
         self.reference = reference
-        self.user_id = user_id
+        self.list_id = list_id
         self.name = name
-        self.active = active
-        self.public = public
+        self.url = url
         self.updated_at = updated_at
         self.created_at = created_at
 
     def __repr__(self):
-        return '<GiftList {}>'.format(self.id)
+        return '<GiftListElement {}>'.format(self.id)
 
     def get_id(self):
         return self.id

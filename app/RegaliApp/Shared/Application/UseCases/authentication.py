@@ -1,6 +1,7 @@
 import json
 import os
-from app import app, models, db
+import sys
+from app import app, db
 from flask import Flask, redirect, request, url_for, render_template
 from flask_login import (
     LoginManager,
@@ -11,6 +12,9 @@ from flask_login import (
 )
 from oauthlib.oauth2 import WebApplicationClient
 import requests
+from app.RegaliApp.Person.Infrastructure.Repositories.AlchemyPersonRepository import AlchemyPersonRepository
+from app.RegaliApp.Person.Infrastructure.Entities.AlchemyPerson import AlchemyPerson
+
 
 # Configuration
 GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID", None)
@@ -28,7 +32,7 @@ client = WebApplicationClient(GOOGLE_CLIENT_ID)
 
 class GetUserUseCase():
     def execute(self, user_id):
-        return models.Person.query.get(user_id) 
+        return AlchemyPersonRepository.findOneByUserId(user_id) 
 
 class RedirectToGoogleAuthenticationUseCase():
     def execute(self):
@@ -90,13 +94,16 @@ class SigninOrSignupUserUseCase():
 
         # Create a user in your db with the information provided
         # by Google
-        user = models.Person.query.filter(models.Person.google_id == unique_id).first()
+
+        user = AlchemyPersonRepository.findOneByGoogleId(google_id=unique_id)
+        #user = models.Person.query.filter(models.Person.google_id == unique_id).first()
 
         # Doesn't exist? Add it to the database.
         if user is None:
-            user = models.Person(google_id=unique_id, email=users_email, name=users_name, is_active=1, profile_pic=picture)
-            db.session.add(user)
-            db.session.commit()
+            user = AlchemyPerson(id=None, google_id=unique_id, email=users_email, name=users_name, is_active=True, is_authenticated=True, profile_pic=picture)
+            AlchemyPersonRepository.save(
+                user
+            )
 
         # Begin user session by logging the user in
         login_user(user)

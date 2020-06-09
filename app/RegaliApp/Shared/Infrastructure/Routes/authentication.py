@@ -4,7 +4,7 @@ from flask_login import (
     LoginManager,
     login_required,
 )
-from app.usecases import authentication
+from app.RegaliApp.Shared.Application.UseCases import authentication
 
 app.secret_key = os.environ.get("SECRET_KEY") or os.urandom(24)
 

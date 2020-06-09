@@ -13,12 +13,26 @@ CREATE TABLE IF NOT EXISTS `person` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `event` (
+CREATE TABLE IF NOT EXISTS `list` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `reference` varchar(64) NOT NULL UNIQUE,
+  `user_id` int(10) unsigned NOT NULL,
   `name` varchar(36) NOT NULL,
-  `created_at` date NOT NULL,
-  `person_id` int(10) unsigned NOT NULL,
-  `reference` varchar(36) NOT NULL,
+  `public` tinyint(1) NOT NULL DEFAULT 1,
+  `active` tinyint(1) NOT NULL DEFAULT 1,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
+  `created_at` TIMESTAMP DEFAULT current_timestamp,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `list_element` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `reference` varchar(64) NOT NULL UNIQUE,
+  `list_id` int(10) unsigned NOT NULL,
+  `name` varchar(36) NOT NULL,
+  `url` Text NOT NULL,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
+  `created_at` TIMESTAMP DEFAULT current_timestamp,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
