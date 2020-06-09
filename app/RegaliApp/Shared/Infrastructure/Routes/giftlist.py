@@ -8,7 +8,7 @@ import sys
 
 from app.RegaliApp.List.Infrastructure.Repositories.AlchemyGiftListRepository import AlchemyGiftListRepository
 from app.RegaliApp.List.Infrastructure.Entities.AlchemyGiftList import AlchemyGiftList, AlchemyGiftListElement
-from app.RegaliApp.List.Application.UseCases.GetGiftList.GetGiftList import GetGiftListUseCase
+from app.RegaliApp.List.Application.UseCases import GetGiftList
 
 
 @app.route('/giftlists', methods=['POST'])
@@ -42,10 +42,10 @@ def post_giftlist():
 
 @inject
 @app.route('/giftlists/<reference>', methods=['GET'])
-def get_giftlists(use_case: GetGiftListUseCase, reference):
-    giftlists = use_case.execute(reference)
+def get_giftlists(use_case: GetGiftList.UseCase, reference):
+    giftlists = use_case.execute(GetGiftList.Request(reference))
 
-    return giftlists.name
+    return giftlists
 
 @app.route('/giftlists/<reference>', methods=['DELETE'])
 def delete_giftlists(reference):

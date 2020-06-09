@@ -1,6 +1,6 @@
 from injector import singleton
-from app.RegaliApp.List.Application.UseCases.GetGiftList.GetGiftList import GetGiftListUseCase
+from app.RegaliApp.List.Application.UseCases import GetGiftList
 
 
 def configure_use_cases(binder):
-    binder.bind(GetGiftListUseCase, to=GetGiftListUseCase, scope=singleton)
+    binder.bind(GetGiftList.UseCase, to=GetGiftList.UseCase, scope=singleton)
