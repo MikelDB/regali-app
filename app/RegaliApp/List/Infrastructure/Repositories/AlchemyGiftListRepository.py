@@ -5,7 +5,6 @@ from app import db
 
 class AlchemyGiftListRepository(GiftListRepository):
     def findOneByReference(self, reference):
-        print(reference, file=sys.stdout)
         gift_list = db.session.query(AlchemyGiftList).filter(AlchemyGiftList.reference == reference).first()
 
         return gift_list
@@ -22,3 +21,5 @@ class AlchemyGiftListRepository(GiftListRepository):
         db.session.delete(gift_list)
         db.session.commit()
     
+    def findAll(self):
+        return db.session.query(AlchemyGiftList).all()

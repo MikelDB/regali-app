@@ -1,5 +1,5 @@
 class GiftListRepository:
-    def findOneByReference(reference):
+    def findOneByReference(self, reference):
         pass
 
     @staticmethod
@@ -8,4 +8,7 @@ class GiftListRepository:
 
     @staticmethod
     def deleteListByReference(reference):
+        pass
+
+    def findAll(self):
         pass
