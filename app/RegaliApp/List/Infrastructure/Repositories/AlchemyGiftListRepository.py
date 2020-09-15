@@ -9,13 +9,12 @@ class AlchemyGiftListRepository(GiftListRepository):
 
         return gift_list
 
-    @staticmethod
-    def save(AlchemyGiftList):
+    def save(self, AlchemyGiftList):
         db.session.add(AlchemyGiftList)
         db.session.commit()
+        return AlchemyGiftList
 
-    @staticmethod
-    def deleteListByReference(reference):
+    def deleteListByReference(self, reference):
         gift_list = db.session.query(AlchemyGiftList).filter(AlchemyGiftList.reference == reference).first()
 
         db.session.delete(gift_list)

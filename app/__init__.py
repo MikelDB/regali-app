@@ -23,5 +23,6 @@ from app.RegaliApp.Shared.Infrastructure.DependencyInjection.Repositories import
 from app.RegaliApp.Shared.Infrastructure.DependencyInjection.domain_services import configure_services
 from app.RegaliApp.Shared.Infrastructure.DependencyInjection.use_cases import configure_use_cases
 from app.RegaliApp.Shared.Infrastructure.DependencyInjection.data_transformers import configure_data_transformers
+from app.RegaliApp.Shared.Infrastructure.DependencyInjection.factories import configure_factories
 
-FlaskInjector(app=app, modules=[configure, configure_services, configure_use_cases, configure_data_transformers])
+FlaskInjector(app=app, modules=[configure, configure_services, configure_use_cases, configure_data_transformers, configure_factories])

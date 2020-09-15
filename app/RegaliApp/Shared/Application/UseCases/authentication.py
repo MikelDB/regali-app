@@ -1,6 +1,8 @@
 import json
 import os
 import sys
+import uuid
+import jwt
 from app import app, db
 from flask import Flask, redirect, request, url_for, render_template
 from flask_login import (
@@ -11,6 +13,8 @@ from flask_login import (
     logout_user,
 )
 from oauthlib.oauth2 import WebApplicationClient
+from werkzeug.security import generate_password_hash, check_password_hash
+import datetime
 import requests
 from app.RegaliApp.Person.Infrastructure.Repositories.AlchemyPersonRepository import AlchemyPersonRepository
 from app.RegaliApp.Person.Infrastructure.Entities.AlchemyPerson import AlchemyPerson
@@ -24,6 +28,7 @@ GOOGLE_DISCOVERY_URL = (
 )
 
 app.secret_key = os.environ.get("SECRET_KEY") or os.urandom(24)
+
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -119,3 +124,36 @@ class LogoutUser():
     def execute(self):
         logout_user()
         return redirect(url_for("index"))
+
+class UserRegister():
+    def execute(self, email, name, password):
+        user = AlchemyPerson(
+            None,
+            str(uuid.uuid4()),
+            None,
+            name,
+            email,
+            True,
+            True,
+            'undefined',
+            password
+        )
+
+        AlchemyPersonRepository.save(user)
+
+class UserLogin():
+    def execute(self, auth):
+        if not auth or not auth.username or not auth.password:
+            raise Exception('Invalid Credentials, missing auth')
+
+        user = AlchemyPersonRepository.findOneByEmail(auth.username)
+
+        if not user:
+            raise Exception('Invalid Credentials, no user found')
+
+        if check_password_hash(user.password, auth.password):
+            token = jwt.encode({'public_id': user.public_id, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
+
+            return token
+
+        raise Exception('Invalid Credentials, password won\'t match')

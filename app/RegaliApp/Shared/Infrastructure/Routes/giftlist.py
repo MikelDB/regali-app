@@ -1,8 +1,7 @@
 import os
 from app import app
 from flask_login import current_user
-import uuid
-from flask import redirect, url_for, json
+from flask import redirect, url_for, json, request
 from injector import inject
 import sys
 
@@ -10,36 +9,26 @@ from app.RegaliApp.List.Infrastructure.Repositories.AlchemyGiftListRepository im
 from app.RegaliApp.List.Infrastructure.Entities.AlchemyGiftList import AlchemyGiftList, AlchemyGiftListElement
 from app.RegaliApp.List.Application.UseCases import GetGiftList
 from app.RegaliApp.List.Application.UseCases import GetGiftLists
+from app.RegaliApp.List.Application.UseCases import DeleteGiftList
+from app.RegaliApp.List.Application.UseCases import CreateGiftList
+
+from app.RegaliApp.Shared.Infrastructure.Routes.authentication import token_required
 
 
 @app.route('/giftlists', methods=['POST'])
-def post_giftlist():
-    gift_list = AlchemyGiftList(
-        None,
-        str(uuid.uuid4()),
+@token_required
+@inject
+def post_giftlist(use_case: CreateGiftList.UseCase):
+    gift_list_request = CreateGiftList.Request(
         1,
-        'Lista de prueba',
-        True,       
-        True,
-        None,
-        None
+        request.json['name']
     )
 
-    gift_list.elements.append(
-        AlchemyGiftListElement(
-            None,
-            str(uuid.uuid4()),
-            None,
-            'Otra Prueba',
-            'www.wiii.com',
-            None,
-            None            
-        )
-    )
+    gift_list = use_case.execute(gift_list_request)
 
-    AlchemyGiftListRepository.save(gift_list)
-
-    return 'post_giftlist'
+    return {
+        'reference': gift_list.reference 
+    }
 
 @inject
 @app.route('/giftlists/<reference>', methods=['GET'])
@@ -57,8 +46,12 @@ def get_giftlists(use_case: GetGiftLists.UseCase):
     return giftlists
 
 
+@inject
 @app.route('/giftlists/<reference>', methods=['DELETE'])
-def delete_giftlists(reference):
-    AlchemyGiftListRepository.deleteListByReference(reference)
+@token_required
+def delete_giftlists(use_case: DeleteGiftList.UseCase, reference):
+    use_case.execute(DeleteGiftList.Request(reference))
 
-    return 'ok'
+    return {
+        'message': 'List Deleted'
+    }
