@@ -1,11 +1,13 @@
 class GiftListRepository:
-    def findOneByReference(reference):
+    def findOneByReference(self, reference):
         pass
 
     @staticmethod
     def save(AlchemyGiftList):
         pass
 
-    @staticmethod
-    def deleteListByReference(reference):
+    def deleteListByReference(self, reference):
+        pass
+
+    def findAll(self):
         pass

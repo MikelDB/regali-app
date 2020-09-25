@@ -15,6 +15,12 @@ class AlchemyPersonRepository:
         return person
 
     @staticmethod
+    def findOneByEmail(email):
+        person = db.session.query(AlchemyPerson).filter(AlchemyPerson.email == email).first()
+
+        return person
+
+    @staticmethod
     def save(AlchemyPerson):
         db.session.add(AlchemyPerson)
         db.session.commit()

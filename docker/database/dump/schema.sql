@@ -4,9 +4,11 @@ use testDB;
 
 CREATE TABLE IF NOT EXISTS `person` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `google_id` varchar(36) NOT NULL UNIQUE,
+  `google_id` varchar(36) DEFAULT NULL UNIQUE,
+  `public_id`varchar(50) NOT NULL UNIQUE,
+  `password` varchar(80) DEFAULT NULL,
   `name` varchar(16) NOT NULL,
-  `email` varchar(36) NOT NULL,
+  `email` varchar(36) NOT NULL UNIQUE,
   `is_active` tinyint(1) NOT NULL DEFAULT 1,
   `is_authenticated` tinyint(1) NOT NULL DEFAULT 1,
   `profile_pic` TEXT NOT NULL,
