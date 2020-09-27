@@ -10,7 +10,6 @@ template_dir2 = os.path.realpath('RegaliApp/Shared/Infrastructure/Presentation/s
 
 print('Template dir: ' + template_dir, file=sys.stdout)
 print('Template dir2: ' + template_dir2, file=sys.stdout)
-
 app = Flask(__name__, template_folder='/app' + template_dir, static_folder='/app' + template_dir2)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URI", None)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

@@ -15,10 +15,10 @@ from app.RegaliApp.List.Application.UseCases import CreateGiftList
 from app.RegaliApp.Shared.Infrastructure.Routes.authentication import token_required
 
 
+@inject
 @app.route('/giftlists', methods=['POST'])
 @token_required
-@inject
-def post_giftlist(use_case: CreateGiftList.UseCase):
+def post_giftlist(current_user, use_case: CreateGiftList.UseCase):
     gift_list_request = CreateGiftList.Request(
         1,
         request.json['name']
@@ -32,7 +32,8 @@ def post_giftlist(use_case: CreateGiftList.UseCase):
 
 @inject
 @app.route('/giftlists/<reference>', methods=['GET'])
-def get_giftlist(use_case: GetGiftList.UseCase, reference):
+@token_required
+def get_giftlist(current_user, use_case: GetGiftList.UseCase, reference):
     giftlists = use_case.execute(GetGiftList.Request(reference))
 
     return giftlists
@@ -40,7 +41,8 @@ def get_giftlist(use_case: GetGiftList.UseCase, reference):
 
 @inject
 @app.route('/giftlists', methods=['GET'])
-def get_giftlists(use_case: GetGiftLists.UseCase):
+@token_required
+def get_giftlists(current_user, use_case: GetGiftLists.UseCase):
     giftlists = use_case.execute()
 
     return giftlists
@@ -49,7 +51,7 @@ def get_giftlists(use_case: GetGiftLists.UseCase):
 @inject
 @app.route('/giftlists/<reference>', methods=['DELETE'])
 @token_required
-def delete_giftlists(use_case: DeleteGiftList.UseCase, reference):
+def delete_giftlists(current_user, use_case: DeleteGiftList.UseCase, reference):
     use_case.execute(DeleteGiftList.Request(reference))
 
     return {

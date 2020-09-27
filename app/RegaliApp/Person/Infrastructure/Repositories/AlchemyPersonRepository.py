@@ -24,4 +24,9 @@ class AlchemyPersonRepository:
     def save(AlchemyPerson):
         db.session.add(AlchemyPerson)
         db.session.commit()
-    
+
+    @staticmethod
+    def findOneByPublicId(public_id):
+        person = db.session.query(AlchemyPerson).filter(AlchemyPerson.public_id == public_id).first()
+
+        return person

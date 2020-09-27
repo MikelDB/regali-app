@@ -1,4 +1,6 @@
 import os
+import sys
+import jwt
 from app import app
 
 from flask import request, make_response
@@ -7,6 +9,7 @@ from flask_login import (
     login_required,
 )
 from app.RegaliApp.Shared.Application.UseCases import authentication
+from app.RegaliApp.Person.Infrastructure.Repositories.AlchemyPersonRepository import AlchemyPersonRepository
 
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
@@ -52,6 +55,15 @@ def token_required(f):
 
         if not token:
             return   {'message': 'Token is missing'}, 401
+
+        try:
+            data = jwt.decode(token, app.config['SECRET_KEY'])
+            current_user = AlchemyPersonRepository.findOneByPublicId(data['public_id'])
+
+        except:
+            return {'message': 'token is invalid'}
+
+        return f(current_user, *args, **kwargs)
     
     return decorated
 
@@ -59,12 +71,11 @@ def token_required(f):
 @app.route('/authentication/login', methods=['POST'])
 def authenticate_login():
     auth = request.authorization        
-    
     try:
         use_case = authentication.UserLogin()
         token = use_case.execute(auth)
 
-        return {'token:' : token.decode('UTF-8')}
+        return {'token' : token.decode('UTF-8')}
     except Exception as exception:
         return make_response(exception.args[0], 401, {'WWW-Authenticate' : 'Basic realm="Login required!"'})
 
