@@ -6,7 +6,18 @@ class ToDictDataTransformer(DataTransformer):
             'name': list.name,
             'reference': list.reference,
             'created_at': list.created_at,
-            'active': list.active
+            'active': list.active,
+            'elements': self.transformGiftListElements(list.elements),
         }
 
         return transformedList
+
+    def transformGiftListElements(self, gift_list_elements):
+        tranformedGiftListElements = []
+
+        for gift_list_element in gift_list_elements:
+            tranformedGiftListElements.append({
+                'name': gift_list_element.name
+            })
+
+        return tranformedGiftListElements
