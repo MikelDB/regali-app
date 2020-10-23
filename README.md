@@ -1,1 +1,1 @@
-# mimutimer
+# RegaliAPP
