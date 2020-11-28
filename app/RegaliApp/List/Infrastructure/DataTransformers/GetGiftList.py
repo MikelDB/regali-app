@@ -17,7 +17,9 @@ class ToDictDataTransformer(DataTransformer):
 
         for gift_list_element in gift_list_elements:
             tranformedGiftListElements.append({
-                'name': gift_list_element.name
+                'name': gift_list_element.name,
+                'url': gift_list_element.url,
+                'reference': gift_list_element.reference
             })
 
         return tranformedGiftListElements

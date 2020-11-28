@@ -7,6 +7,9 @@ from app.RegaliApp.List.Application.UseCases import GetGiftList
 from app.RegaliApp.List.Application.UseCases import GetGiftLists
 from app.RegaliApp.List.Application.UseCases import DeleteGiftList
 from app.RegaliApp.List.Application.UseCases import CreateGiftList
+from app.RegaliApp.List.Application.UseCases import DeleteGiftListElement
+from app.RegaliApp.List.Application.UseCases import CreateGiftListElement
+
 
 from app.RegaliApp.Shared.Infrastructure.Routes.authentication import token_required
 
@@ -51,4 +54,30 @@ def delete_giftlists(current_user, use_case: DeleteGiftList.UseCase, reference):
 
     return {
         'message': 'List Deleted'
+    }
+
+
+@inject
+@app.route('/giftlists/<reference>/elements', methods=['POST'])
+@token_required
+def post_giftlist_element(current_user, use_case: CreateGiftListElement.UseCase, reference):
+    return use_case.execute(
+        CreateGiftListElement.Request(reference, request.json['url'])
+    )
+
+
+
+@inject
+@app.route('/giftlists/<list_reference>/elements/<element_reference>', methods=['DELETE'])
+@token_required
+def delete_giftlist_element(current_user, use_case: DeleteGiftListElement.UseCase, list_reference, element_reference):
+    use_case.execute(
+        DeleteGiftListElement.Request(
+            list_reference,
+            element_reference
+        )
+    )
+
+    return {
+        'message': 'List Element Deleted'
     }
