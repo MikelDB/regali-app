@@ -1,9 +1,10 @@
+from app.RegaliApp.List.Domain.Entities.GiftList import GiftList
+
 class GiftListRepository:
     def findOneByReference(self, reference):
         pass
 
-    @staticmethod
-    def save(AlchemyGiftList):
+    def save(self, AlchemyGiftList) -> GiftList:
         pass
 
     def deleteListByReference(self, reference):
