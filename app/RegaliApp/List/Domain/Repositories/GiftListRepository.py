@@ -1,7 +1,7 @@
 from app.RegaliApp.List.Domain.Entities.GiftList import GiftList
 
 class GiftListRepository:
-    def findOneByReference(self, reference):
+    def findOneByReference(self, reference) -> GiftList:
         pass
 
     def save(self, AlchemyGiftList) -> GiftList:
