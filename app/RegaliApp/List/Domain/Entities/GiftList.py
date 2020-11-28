@@ -8,6 +8,7 @@ class GiftList:
         self.public = public
         self.updated_at = updated_at
         self.created_at = created_at
+        self.elements = []
 
     def __repr__(self):
         return '<GiftList {}>'.format(self.id)
