@@ -26,6 +26,7 @@ jobs:
           pylint --load-plugins pylint_flask_sqlalchemy app
   
   Unittest:
+    name: Unit Tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -42,4 +43,20 @@ jobs:
           cd api
           python -m unittest discover -s tests/unit/ 
 
-      
+  IntegrationTest:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      - name: Install Requirements
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r ./docker/requirements.txt
+      - name: Run integration tests
+        run: |
+          cd api
+          python -m unittest discover -s tests/integration/
