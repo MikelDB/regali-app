@@ -20,9 +20,12 @@ jobs:
             pip install pylint --upgrade
             pip install pylint-flask
             pip install pylint_flask_sqlalchemy
+        - name: Enter api folder
+          run: |
+            cd api
         - name: Run Pylint
           run: |
-            pylint --load-plugins pylint_flask_sqlalchemy api/app
+            pylint --load-plugins pylint_flask_sqlalchemy app
         
 
       
