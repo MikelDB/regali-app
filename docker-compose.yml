@@ -10,7 +10,7 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - "./:/app:delegated"
+      - "./api:/app:delegated"
     depends_on:
       - "mysql"
     env_file:
