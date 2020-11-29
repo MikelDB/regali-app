@@ -8,9 +8,10 @@ jobs:
   Pylint:
       runs-on: ubuntu-latest
       steps:
-        - uses: actions/checkout@v1
-        - uses: actions/setup-python@v1
-        - run: pip install pylint  # -r requirements.txt
-        - run: pylint **/*.py
+        - name: Python Pylin GitHub Action
+          uses: fylein/python-pylint-github-action@v1
+          with:
+            args: pip3 install -r requirements.txt && pylint --rcfile=.pylintrc app
+        
 
       
