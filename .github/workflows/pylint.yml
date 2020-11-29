@@ -21,7 +21,7 @@ jobs:
             pip install pylint_flask_sqlalchemy
         - name: Run Pylint
           run: |
-            ls
+            pylint --load-plugins pylint_flask_sqlalchemy app
         
 
       
