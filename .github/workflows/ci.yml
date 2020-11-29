@@ -25,6 +25,7 @@ jobs:
             cd api
         - name: Run Pylint
           run: |
+            ls
             pylint --load-plugins pylint_flask_sqlalchemy app
         
 
