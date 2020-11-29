@@ -17,3 +17,6 @@ in: ## Enter docker api machine
 
 pylint: ## Pylint code
 	docker-compose exec api pylint --load-plugins pylint_flask_sqlalchemy app
+
+unittest: ## Unittest code
+	docker-compose exec api python -m unittest discover -s tests/unit/ 
