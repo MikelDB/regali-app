@@ -1,3 +1,4 @@
+# pyling: disable=W0613
 from flask import request
 from injector import inject
 
