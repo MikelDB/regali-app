@@ -43,6 +43,7 @@ jobs:
           python -m unittest discover -s tests/unit/ 
 
   IntegrationTest:
+    name: Integration Tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
