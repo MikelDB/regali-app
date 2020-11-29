@@ -10,3 +10,4 @@ web/.config
 .vuerc
 .vscode
 *.pyc
+.pylint.d

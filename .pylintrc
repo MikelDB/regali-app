@@ -1,0 +1,18 @@
+[FORMAT]
+max-line-length=120
+
+[MASTER]
+disable=
+    C0114, # missing-module-docstring
+    C0115, # missing-class-doctring
+    C0116, # missing-function-docstring
+    R0903, # too-few-public-methods
+    R0401, # cyclic-import
+
+[SIMILARITIES]
+# Minimum lines number of a similarity. TO BE REMOVED
+min-similarity-lines=15
+
+[DESIGN]
+max-attributes=12
+max-args=10

@@ -8,8 +8,12 @@ help:
 
 up: ## Spin up the project
 	docker-compose up -d
-	docker-compose exec api bash
 
 down: ## Bring down the environment
 	docker-compose down
-	docker stop $(docker ps -aq)
+
+in: ## Enter docker api machine
+	docker-compose exec api bash
+
+pylint: ## Pylint code
+	docker-compose exec api pylint --load-plugins pylint_flask_sqlalchemy app
