@@ -14,9 +14,9 @@ services:
     depends_on:
       - "mysql"
     environment: 
-      - DATABASE_URI
-      - JWT_SECRET_KEY
-      - PYLINTHOME
+      - DATABASE_URI=$DATABASE_URI
+      - JWT_SECRET_KEY=$JWT_SECRET_KEY
+      - PYLINTHOME=$PYLINTHOME
   mysql:
     image: mysql:8.0
     environment:
