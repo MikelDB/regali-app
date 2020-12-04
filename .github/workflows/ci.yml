@@ -48,15 +48,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v1
+      - name: Spin up containers
+        env:
+          DATABASE_URI: ${{ secrets.DATABASE_URI }}
+          JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
+          PYLINTHOME: ${{ secrets.PYLINTHOME }}
+        run: docker-compose -f docker-compose.ci.yml up -d
+      - name: Sleep
+        uses: jakejarvis/wait-action@master
         with:
-          python-version: 3.8
-      - name: Install Requirements
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r ./docker/requirements.txt
+          time: '15s'
+      - name: Check running containers
+        run: docker ps -a
       - name: Run integration tests
-        run: |
-          cd api
-          python -m unittest discover -s tests/integration/
+        run: docker-compose -f docker-compose.ci.yml exec -T api python -m unittest discover -s tests/integration/
