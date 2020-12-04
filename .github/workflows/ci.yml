@@ -49,6 +49,10 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Spin up containers
+        env:
+          DATABASE_URI: ${{ secrets.DATABASE_URI }}
+          JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
+          PYLINTHOME: ${{ secrets.PYLINTHOME }}
         run: docker-compose -f docker-compose.ci.yml up -d
       - name: Sleep
         uses: jakejarvis/wait-action@master
