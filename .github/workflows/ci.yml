@@ -53,4 +53,4 @@ jobs:
       - name: Check running containers
         run: docker ps -a
       - name: Run integration tests
-        run: docker-compose -f docker-compose.ci.yml exec api python -m unittest discover -s tests/integration/
+        run: docker-compose -f docker-compose.ci.yml exec -T api python -m unittest discover -s tests/integration/
