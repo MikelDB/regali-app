@@ -1,5 +1,5 @@
 from app.regali_app.list.application.use_cases.create_gift_list import RequestDataTransformer, Request, ResponseDataTransformer, Response
-
+import sys
 class FlaskRequestToCreateGiftListRequest(RequestDataTransformer):
     def transform(self, user_id, request) -> Request:
         return Request(

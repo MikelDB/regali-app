@@ -94,4 +94,7 @@ def authenticate_register():
         hashed_password
     )
 
-    return 'user created'
+    return {
+        'status': 200,
+        'message': 'User Created'
+    }

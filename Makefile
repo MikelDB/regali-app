@@ -20,3 +20,6 @@ pylint: ## Pylint code
 
 unittest: ## Unittest code
 	docker-compose exec api python -m unittest discover -s tests/unit/ 
+
+integrationtest: ## Integration Test code
+	docker-compose exec api python -m unittest discover -s tests/integration/ 
