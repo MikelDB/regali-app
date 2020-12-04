@@ -13,13 +13,21 @@ class TestGetFileNameEndPoint(unittest.TestCase):
 
     def test_it_should_work_throw_the_happy_flow(self):
         self.__register_user()
+        print('User registerd')
         self.__login_user()
+        print('User Logged In')
         self.__post_list()
+        print('List posted')
         self.__get_lists()
+        print('Lists getted')
         self.__get_list()
+        print('List getted')
         self.__post_element()
+        print('Element posted')
         self.__delete_element()
+        print('Element deleted')
         self.__delete_list()
+        print('List deleted')
 
     def __register_user(self):
         url = self.HOST + "/authentication/register"
