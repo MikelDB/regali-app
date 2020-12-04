@@ -42,7 +42,6 @@ class TestGetFileNameEndPoint(unittest.TestCase):
         }
 
         response = requests.request("POST", url, headers=headers, data=json.dumps(payload), verify=False)
-        print(response.text)
         self.assertEqual(200, response.status_code)
         self.assertEqual('User Created', response.json()['message'])
 
