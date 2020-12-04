@@ -48,15 +48,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.8
-      - name: Install Requirements
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r ./docker/requirements.txt
+      - name: Spin up containers
+        run: make up
+      - name: Sleep
+        uses: jakejarvis/wait-action@master
+          with:
+            time: '60s'
+      - name: Check running containers
+        run: docker ps -a
       - name: Run integration tests
-        run: |
-          cd api
-          python -m unittest discover -s tests/integration/
+        run: make integrationtest
