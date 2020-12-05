@@ -69,10 +69,10 @@ jobs:
       - uses: actions/checkout@v1
       - name: Unit tests
         run: yarn test
-        working-directory: ./api
+        working-directory: ./frontend
       - name: Linter
         run: yarn lint
-        working-directory: ./api
+        working-directory: ./frontend
       - name: Build
         run: yarn build
-        working-directory: ./api
+        working-directory: ./frontend
