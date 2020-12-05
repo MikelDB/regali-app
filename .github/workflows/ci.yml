@@ -67,11 +67,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Enter frontend folder
-        run: cd frontend
       - name: Unit tests
         run: yarn test
+        working-directory: ./api
       - name: Linter
         run: yarn lint
+        working-directory: ./api
       - name: Build
         run: yarn build
+        working-directory: ./api
