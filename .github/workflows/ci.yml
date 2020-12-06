@@ -62,3 +62,20 @@ jobs:
         run: docker ps -a
       - name: Run integration tests
         run: docker-compose -f docker-compose.ci.yml exec -T api python -m unittest discover -s tests/integration/
+  Frontend:
+    name: Frontend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install node_modules
+        run: yarn
+        working-directory: ./frontend
+      - name: Unit tests
+        run: yarn test
+        working-directory: ./frontend
+      - name: Linter
+        run: yarn lint
+        working-directory: ./frontend
+      - name: Build
+        run: yarn build
+        working-directory: ./frontend

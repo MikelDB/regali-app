@@ -8,13 +8,21 @@ services:
     working_dir: /app
     user: $MY_UID:$MY_GID
     ports:
-      - "5000:5000"
+      - 5000:5000
     volumes:
-      - "./api:/app:delegated"
+      - ./api:/app:delegated
     depends_on:
       - "mysql"
     env_file:
       - local.env
+  frontend:
+    image: node:15.3.0-alpine3.10
+    command: yarn start
+    working_dir: /app
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/app:delegated
   mysql:
     image: mysql:8.0
     environment:
