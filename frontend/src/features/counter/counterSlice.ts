@@ -1,6 +1,7 @@
+
+/* eslint-disable import/no-cycle no-param-reassign prettier/prettier @typescript-eslint/explicit-module-boundary-types */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from '../../app/store';
-// eslint-disable import/no-cycle no-param-reassign prettier/prettier @typescript-eslint/explicit-module-boundary-types
 interface CounterState {
   value: number;
 }
