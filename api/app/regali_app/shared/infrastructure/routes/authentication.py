@@ -95,6 +95,5 @@ def authenticate_register():
     )
 
     return {
-        'status': 200,
         'message': 'User Created'
     }
